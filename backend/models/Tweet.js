@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 
-const NoteSchema = new Schema({
+const TweetSchema = new Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
@@ -10,10 +10,7 @@ const NoteSchema = new Schema({
     type: String,
     required: true,
   },
-  description: {
-    type: String,
-    required: true,
-  },
+  profileImageURL: String,
   tag: {
     type: String,
     default: "General",
@@ -24,4 +21,4 @@ const NoteSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("note", NoteSchema);
+module.exports = mongoose.model("tweet", TweetSchema);

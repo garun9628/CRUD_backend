@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
-import NoteState from "./context/notes/NoteState";
+import TweetState from "./context/tweets/TweetState";
 import Alert from "./components/Alert";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <>
-      <NoteState>
+      <TweetState>
         <Router>
           <Navbar info={info} />
           <Alert alert={alert} />
@@ -60,7 +60,7 @@ const App = () => {
             </Routes>
           </div>
         </Router>
-      </NoteState>
+      </TweetState>
     </>
   );
 };

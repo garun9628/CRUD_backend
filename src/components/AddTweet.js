@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import noteContext from "../context/notes/NoteContext";
+// import tweetContext from "../context/tweets/TweetContext";
+import tweetContext from "../context/tweets/TweetContext";
 
-const AddNote = (props) => {
-  const context = useContext(noteContext);
-  const { addNote } = context;
-  const [note, setNote] = useState({
+const AddTweet = (props) => {
+  const context = useContext(tweetContext);
+  const { addTweet } = context;
+  const [tweet, setTweet] = useState({
     title: "",
     description: "",
     tag: "",
@@ -12,8 +13,8 @@ const AddNote = (props) => {
 
   const handleClick = (e) => {
     e.preventDefault(); // isse page reload nahi hoga
-    addNote(note.title, note.description, note.tag);
-    setNote({
+    addTweet(tweet.title, tweet.description, tweet.tag);
+    setTweet({
       title: "",
       description: "",
       tag: "",
@@ -22,7 +23,7 @@ const AddNote = (props) => {
   };
 
   const onChange = (e) => {
-    setNote({ ...note, [e.target.name]: e.target.value });
+    setTweet({ ...tweet, [e.target.name]: e.target.value });
   };
 
   return (
@@ -31,7 +32,7 @@ const AddNote = (props) => {
         className="my-5"
         style={{ display: "flex", justifyContent: "center" }}
       >
-        <h1>Add a Note</h1>
+        <h1>Add a Tweet</h1>
       </div>
 
       <form>
@@ -66,7 +67,7 @@ const AddNote = (props) => {
               className="form-control"
               id="title"
               name="title"
-              value={note.title}
+              value={tweet.title}
               aria-describedby="emailHelp"
               onChange={onChange}
               minLength={5}
@@ -93,7 +94,7 @@ const AddNote = (props) => {
               className="form-control"
               id="description"
               name="description"
-              value={note.description}
+              value={tweet.description}
               onChange={onChange}
               minLength={5}
               required
@@ -120,7 +121,7 @@ const AddNote = (props) => {
               className="form-control"
               id="tag"
               name="tag"
-              value={note.tag}
+              value={tweet.tag}
               onChange={onChange}
               minLength={5}
               required
@@ -137,12 +138,12 @@ const AddNote = (props) => {
             }}
           >
             <button
-              disabled={note.title.length < 3 || note.description.length < 5}
+              disabled={tweet.title.length < 3 || tweet.description.length < 5}
               type="submit"
               className="btn btn-primary"
               onClick={handleClick}
             >
-              Add Note
+              Add Tweet
             </button>
           </div>
         </div>
@@ -151,4 +152,4 @@ const AddNote = (props) => {
   );
 };
 
-export default AddNote;
+export default AddTweet;

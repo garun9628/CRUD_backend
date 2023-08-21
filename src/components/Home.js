@@ -1,13 +1,13 @@
 import React from "react";
-import AddNote from "./AddNote.js";
-import Notes from "./Notes.js";
+import AddNote from "./AddTweet.js";
+import Tweets from "./Tweets.js";
 
 const Home = (props) => {
   const { showAlert } = props;
   return (
     <>
       <AddNote showAlert={showAlert} />
-      <Notes showAlert={showAlert} />
+      <Tweets showAlert={showAlert} />
     </>
   );
 };

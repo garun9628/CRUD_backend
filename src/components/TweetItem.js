@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
-import noteContext from "../context/notes/NoteContext";
+import tweetContext from "../context/tweets/TweetContext";
 
-const NoteItem = (props) => {
-  const context = useContext(noteContext);
-  const { deleteNote } = context;
-  const { note, updateNote, showAlert } = props;
+const TweetItem = (props) => {
+  const context = useContext(tweetContext);
+  const { deleteTweet } = context;
+  const { tweet, updateTweet, showAlert } = props;
 
   const handleDelete = () => {
-    deleteNote(note._id);
-    showAlert("Note deleted successfully", "success");
+    deleteTweet(tweet._id);
+    showAlert("Tweet deleted successfully", "success");
   };
 
   const handleEditClick = () => {
-    updateNote(note);
+    updateTweet(tweet);
   };
 
   return (
@@ -26,18 +26,18 @@ const NoteItem = (props) => {
       >
         <div className="card-body">
           <div className="d-flex align-items-center justify-content-between">
-            <h5 class="card-subtitle mb-2 text-muted">{note.title}</h5>
+            <h5 class="card-subtitle mb-2 text-muted">{tweet.title}</h5>
             <div>
               <i className="far fa-trash-alt mx-2" onClick={handleDelete}></i>
               <i className="far fa-edit mx-2" onClick={handleEditClick}></i>
             </div>
           </div>
-          <p className="card-text">{note.description}</p>
-          <h6 className="card-title">{note.tag}</h6>
+          <p className="card-text">{tweet.description}</p>
+          <h6 className="card-title">{tweet.tag}</h6>
         </div>
       </div>
     </div>
   );
 };
 
-export default NoteItem;
+export default TweetItem;

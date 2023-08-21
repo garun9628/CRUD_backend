@@ -1,25 +1,25 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import noteContext from "../context/notes/NoteContext";
-import NoteItem from "./NoteItem";
+import tweetContext from "../context/tweets/TweetContext";
+import TweetItem from "./TweetItem";
 
-const Notes = (props) => {
+const Tweets = (props) => {
   const history = useNavigate();
   const { showAlert } = props;
-  const context = useContext(noteContext);
-  const { notes, getAllNotes, editNote } = context;
+  const context = useContext(tweetContext);
+  const { tweets, getAllTweets, editTweet } = context;
   const refModal = useRef(null);
   const refClose = useRef(null);
-  const [note, setNote] = useState({
+  const [tweet, setTweet] = useState({
     id: "",
     etitle: "",
-    edescription: "",
+    eimage: "",
     etag: "",
   });
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      getAllNotes();
+      getAllTweets();
     } else {
       history("/login");
     }
@@ -27,24 +27,24 @@ const Notes = (props) => {
     // eslint-disable-next-line
   }, []);
 
-  const updateNote = (currNote) => {
+  const updateTweet = (currTweet) => {
     refModal.current.click();
-    setNote({
-      id: currNote._id,
-      etitle: currNote.title,
-      edescription: currNote.description,
-      etag: currNote.tag,
+    setTweet({
+      id: currTweet._id,
+      etitle: currTweet.title,
+      eimage: currTweet.image,
+      etag: currTweet.tag,
     });
   };
 
   const handleUpdateClick = (e) => {
-    editNote(note.id, note.etitle, note.edescription, note.etag);
+    editTweet(tweet.id, tweet.etitle, tweet.eimage, tweet.etag);
     refClose.current.click();
     props.showAlert("Updated Successfully", "success");
   };
 
   const onChange = (e) => {
-    setNote({ ...note, [e.target.name]: e.target.value });
+    setTweet({ ...tweet, [e.target.name]: e.target.value });
   };
 
   return (
@@ -70,7 +70,7 @@ const Notes = (props) => {
           <div className="modal-content">
             <div className="modal-header">
               <h1 className="modal-title fs-5" id="exampleModalLabel">
-                Edit Note
+                Edit Tweet
               </h1>
               <button
                 type="button"
@@ -90,7 +90,7 @@ const Notes = (props) => {
                     className="form-control"
                     id="etitle"
                     name="etitle"
-                    value={note.etitle}
+                    value={tweet.etitle}
                     aria-describedby="emailHelp"
                     onChange={onChange}
                     minLength={3}
@@ -98,15 +98,15 @@ const Notes = (props) => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="description" className="form-label">
+                  <label htmlFor="image" className="form-label">
                     Description
                   </label>
                   <input
                     type="text"
                     className="form-control"
-                    id="edescription"
-                    name="edescription"
-                    value={note.edescription}
+                    id="eimage"
+                    name="eimage"
+                    value={tweet.eimage}
                     onChange={onChange}
                     minLength={5}
                     required
@@ -122,7 +122,7 @@ const Notes = (props) => {
                     className="form-control"
                     id="etag"
                     name="etag"
-                    value={note.etag}
+                    value={tweet.etag}
                     onChange={onChange}
                     minLength={5}
                     required
@@ -140,14 +140,12 @@ const Notes = (props) => {
                 Close
               </button>
               <button
-                disabled={
-                  note.etitle.length < 3 || note.edescription.length < 5
-                }
+                disabled={tweet.etitle.length < 3 || tweet.eimage.length < 5}
                 type="button"
                 className="btn btn-primary"
                 onClick={handleUpdateClick}
               >
-                Update Note
+                Update Tweet
               </button>
             </div>
           </div>
@@ -159,15 +157,15 @@ const Notes = (props) => {
           className="my-3"
           style={{ display: "flex", justifyContent: "center" }}
         >
-          <h1>Your Notes</h1>
+          <h1>Your Tweets</h1>
         </div>
         <div className="row my-5">
-          {notes.map((note) => {
+          {tweets.map((tweet) => {
             return (
-              <NoteItem
-                key={note._id}
-                updateNote={updateNote}
-                note={note}
+              <TweetItem
+                key={tweet._id}
+                updateTweet={updateTweet}
+                tweet={tweet}
                 showAlert={showAlert}
               />
             );
@@ -178,4 +176,4 @@ const Notes = (props) => {
   );
 };
 
-export default Notes;
+export default Tweets;
