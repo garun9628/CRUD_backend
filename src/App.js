@@ -2,13 +2,13 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
-import About from "./components/About";
 import TweetState from "./context/tweets/TweetState";
 import Alert from "./components/Alert";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import UserInfo from "./components/UserInfo";
 import { useState } from "react";
+import Explore from "./components/Explore";
 
 const App = () => {
   const [alert, setAlert] = useState(null);
@@ -45,7 +45,7 @@ const App = () => {
                 path="/"
                 element={<Home showAlert={showAlert} />}
               ></Route>
-              <Route exact path="/about" element={<About />}></Route>
+              <Route exact path="/explore" element={<Explore />}></Route>
               <Route
                 exact
                 path="/login"

@@ -24,7 +24,6 @@ router.post(
   [body("title").isLength({ min: 3 })],
   async (req, res) => {
     try {
-      //console.log(req.user);
       const { title, tag } = req.body;
 
       // if there are validation errors, return bad request and the errors.

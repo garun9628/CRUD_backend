@@ -55,12 +55,12 @@ function Navbar(props) {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${
-                    location.pathname === "/about" ? "active" : ""
+                    location.pathname === "/explore" ? "active" : ""
                   }`}
                   style={{ color: "rgb(180 202 204)" }}
-                  to="/about"
+                  to="/explore"
                 >
-                  About
+                  Explore
                 </Link>
               </li>
             </ul>

@@ -122,4 +122,37 @@ router.get("/getuser", fetchuser, async (req, res) => {
   }
 });
 
+router.get("/getallusers", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.send(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+// update the user if he is following other users
+
+router.patch("/updateuser/:id", fetchuser, async (req, res) => {
+  try {
+    const { following } = req.body;
+
+    let user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send("Not Found");
+    }
+
+    user = await User.findByIdAndUpdate(
+      req.params.id,
+      { $set: { following: following } },
+      { new: true }
+    );
+    res.json({ user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 module.exports = router;

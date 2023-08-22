@@ -1,154 +1,133 @@
-import React, { useContext, useState } from "react";
-// import tweetContext from "../context/tweets/TweetContext";
+import React, { useContext, useState, useRef } from "react";
 import tweetContext from "../context/tweets/TweetContext";
 
 const AddTweet = (props) => {
   const context = useContext(tweetContext);
   const { addTweet } = context;
+  const refModal = useRef(null);
+  const refClose = useRef(null);
   const [tweet, setTweet] = useState({
     title: "",
-    description: "",
     tag: "",
   });
 
-  const handleClick = (e) => {
-    e.preventDefault(); // isse page reload nahi hoga
-    addTweet(tweet.title, tweet.description, tweet.tag);
+  const handlePosts = (currTweet) => {
+    refModal.current.click();
     setTweet({
-      title: "",
-      description: "",
-      tag: "",
+      id: currTweet._id,
+      etitle: currTweet.title,
+      etag: currTweet.tag,
     });
-    props.showAlert("Added Successfully", "success");
   };
 
   const onChange = (e) => {
     setTweet({ ...tweet, [e.target.name]: e.target.value });
   };
 
+  const handleAddClick = (e) => {
+    addTweet(tweet.etitle, tweet.etag);
+    refClose.current.click();
+    props.showAlert("Added Successfully", "success");
+  };
+
   return (
-    <div className="container" style={{ marginTop: "-25px" }}>
-      <div
-        className="my-5"
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-        <h1>Add a Tweet</h1>
+    <>
+      <div className="mt-5 d-flex justify-content-between">
+        <button onClick={handlePosts} type="button" className="btn btn-primary">
+          Post
+        </button>
+        <button type="button" className="btn btn-secondary">
+          My Tweets
+        </button>
       </div>
 
-      <form>
-        <div
-          style={{
-            border: "0.5px solid",
-            width: "90%",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginBottom: "100px",
-            borderColor: "darkgreen",
-            boxShadow: "5px 10px 18px #8888",
-          }}
-        >
-          <div
-            className="my-3"
-            style={{
-              width: "80%",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <label
-              htmlFor="title"
-              className="form-label"
-              style={{ fontSize: "large", color: "black" }}
-            >
-              Title
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="title"
-              name="title"
-              value={tweet.title}
-              aria-describedby="emailHelp"
-              onChange={onChange}
-              minLength={5}
-              required
-            />
-          </div>
-          <div
-            className="my-3"
-            style={{
-              width: "80%",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <label
-              htmlFor="description"
-              className="form-label"
-              style={{ fontSize: "large", color: "black" }}
-            >
-              Description
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="description"
-              name="description"
-              value={tweet.description}
-              onChange={onChange}
-              minLength={5}
-              required
-            />
-          </div>
+      <button
+        ref={refModal}
+        type="button"
+        className="btn btn-primary d-none"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      >
+        Launch demo modal
+      </button>
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="exampleModalLabel">
+                Post Tweet
+              </h1>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <form className="my-3">
+                <div className="mb-3">
+                  <label htmlFor="title" className="form-label">
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="etitle"
+                    name="etitle"
+                    value={tweet.etitle}
+                    aria-describedby="emailHelp"
+                    onChange={onChange}
+                    minLength={3}
+                    required
+                  />
+                </div>
 
-          <div
-            className="my-3"
-            style={{
-              width: "80%",
-              marginLeft: "auto",
-              marginRight: "auto",
-            }}
-          >
-            <label
-              htmlFor="tag"
-              className="form-label"
-              style={{ fontSize: "large", color: "black" }}
-            >
-              Tag
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="tag"
-              name="tag"
-              value={tweet.tag}
-              onChange={onChange}
-              minLength={5}
-              required
-            />
-          </div>
-
-          <div
-            style={{
-              width: "80%",
-              marginLeft: "auto",
-              marginRight: "auto",
-              marginTop: "35px",
-              marginBottom: "30px",
-            }}
-          >
-            <button
-              disabled={tweet.title.length < 3 || tweet.description.length < 5}
-              type="submit"
-              className="btn btn-primary"
-              onClick={handleClick}
-            >
-              Add Tweet
-            </button>
+                <div className="mb-3">
+                  <label htmlFor="tag" className="form-label">
+                    Tag
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="etag"
+                    name="etag"
+                    value={tweet.etag}
+                    onChange={onChange}
+                    minLength={5}
+                    required
+                  />
+                </div>
+              </form>
+            </div>
+            <div className="modal-footer">
+              <button
+                ref={refClose}
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                disabled={tweet?.etitle?.length < 3}
+                type="button"
+                className="btn btn-primary"
+                onClick={handleAddClick}
+              >
+                Post Tweet
+              </button>
+            </div>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 };
 

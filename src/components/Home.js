@@ -1,12 +1,12 @@
 import React from "react";
-import AddNote from "./AddTweet.js";
 import Tweets from "./Tweets.js";
+import AddTweet from "./AddTweet.js";
 
 const Home = (props) => {
   const { showAlert } = props;
   return (
     <>
-      <AddNote showAlert={showAlert} />
+      <AddTweet showAlert={showAlert} />
       <Tweets showAlert={showAlert} />
     </>
   );

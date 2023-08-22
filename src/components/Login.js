@@ -20,10 +20,10 @@ const Login = (props) => {
     });
 
     const json = await response.json();
-
     if (json.success) {
       props.showInfo(`${json.user.name}`, `${json.user.email}`);
       localStorage.setItem("token", json.authToken);
+      localStorage.setItem("myDetails", json.user);
       props.showAlert("Logged in successfully", "success");
       navigate("/");
     } else {

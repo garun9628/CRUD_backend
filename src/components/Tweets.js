@@ -13,7 +13,6 @@ const Tweets = (props) => {
   const [tweet, setTweet] = useState({
     id: "",
     etitle: "",
-    eimage: "",
     etag: "",
   });
 
@@ -32,15 +31,14 @@ const Tweets = (props) => {
     setTweet({
       id: currTweet._id,
       etitle: currTweet.title,
-      eimage: currTweet.image,
       etag: currTweet.tag,
     });
   };
 
-  const handleUpdateClick = (e) => {
-    editTweet(tweet.id, tweet.etitle, tweet.eimage, tweet.etag);
+  const handleCloseClick = (e) => {
+    // editTweet(tweet.id, tweet.etitle, tweet.etag);
     refClose.current.click();
-    props.showAlert("Updated Successfully", "success");
+    props.showAlert("Added Successfully", "success");
   };
 
   const onChange = (e) => {
@@ -97,21 +95,6 @@ const Tweets = (props) => {
                     required
                   />
                 </div>
-                <div className="mb-3">
-                  <label htmlFor="image" className="form-label">
-                    Description
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="eimage"
-                    name="eimage"
-                    value={tweet.eimage}
-                    onChange={onChange}
-                    minLength={5}
-                    required
-                  />
-                </div>
 
                 <div className="mb-3">
                   <label htmlFor="tag" className="form-label">
@@ -143,7 +126,7 @@ const Tweets = (props) => {
                 disabled={tweet.etitle.length < 3 || tweet.eimage.length < 5}
                 type="button"
                 className="btn btn-primary"
-                onClick={handleUpdateClick}
+                onClick={handleCloseClick}
               >
                 Update Tweet
               </button>

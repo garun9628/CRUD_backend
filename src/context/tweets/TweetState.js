@@ -4,8 +4,11 @@ import TweetContext from "./TweetContext";
 const TweetState = (props) => {
   const host = "http://localhost:5000";
   const initialTweets = [];
+  const usersArr = [];
 
   const [tweets, setTweets] = useState(initialTweets);
+  const [users, setUsers] = useState(usersArr);
+  const [loggedUserInfo, setLoggedUserInfo] = useState(null);
 
   // Get all tweets
   const getAllTweets = async () => {
@@ -21,8 +24,35 @@ const TweetState = (props) => {
     setTweets(json);
   };
 
+  // get my details
+  const getMyDetails = async () => {
+    const response = await fetch(`${host}/api/auth/getuser`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    setLoggedUserInfo(json);
+  };
+
+  // Get all users
+  const getAllUsers = async () => {
+    // Api call
+    const response = await fetch(`${host}/api/auth/getallusers`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    const json = await response.json();
+    setUsers(json);
+  };
+
   // Add a tweet
-  const addTweet = async (title, description, tag) => {
+  const addTweet = async (title, tag) => {
     // Api call
     const response = await fetch(`${host}/api/tweets/addtweet`, {
       method: "POST",
@@ -30,7 +60,7 @@ const TweetState = (props) => {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, description, tag }),
+      body: JSON.stringify({ title, tag }),
     });
 
     const tweet = await response.json();
@@ -51,7 +81,7 @@ const TweetState = (props) => {
     getAllTweets();
   };
 
-  const editTweet = async (id, title, description, tag) => {
+  const editTweet = async (id, title, tag) => {
     // Api call
     await fetch(`${host}/api/tweets/updatetweet/${id}`, {
       method: "PUT",
@@ -59,7 +89,7 @@ const TweetState = (props) => {
         "Content-Type": "application/json",
         "auth-token": localStorage.getItem("token"),
       },
-      body: JSON.stringify({ title, description, tag }),
+      body: JSON.stringify({ title, tag }),
     });
 
     // Logic to edit in client
@@ -70,7 +100,6 @@ const TweetState = (props) => {
       let element = newTweets[index];
       if (element._id === id) {
         element.title = title;
-        element.description = description;
         element.tag = tag;
         break;
       }
@@ -78,15 +107,37 @@ const TweetState = (props) => {
     setTweets(newTweets);
   };
 
+  // if user follow other user then update the follower array field;
+
+  const updateFollow = async (id, following) => {
+    // API call
+    const response = await fetch(`${host}/api/auth/updateuser/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ following }),
+    });
+    const json = await response.json();
+    setLoggedUserInfo(json);
+  };
+
   return (
     <TweetContext.Provider
       value={{
         tweets,
+        users,
+        loggedUserInfo,
+        setLoggedUserInfo,
         setTweets,
         addTweet,
         deleteTweet,
         getAllTweets,
         editTweet,
+        getAllUsers,
+        getMyDetails,
+        updateFollow,
       }}
     >
       {props.children}
