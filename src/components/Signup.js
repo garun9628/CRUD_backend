@@ -45,7 +45,7 @@ const Signup = (props) => {
         className="my-5"
         style={{ display: "flex", justifyContent: "center" }}
       >
-        <h1>Create an account to use iNoteBook</h1>
+        <h1>Create an account to use twitter_clone</h1>
       </div>
       <form onSubmit={handleSubmit}>
         <div

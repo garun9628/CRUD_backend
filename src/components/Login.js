@@ -41,7 +41,7 @@ const Login = (props) => {
         className="my-5"
         style={{ display: "flex", justifyContent: "center" }}
       >
-        <h1>Login to continue to iNoteBook</h1>
+        <h1>Login to continue to twitter_clone</h1>
       </div>
       <form onSubmit={handleSubmit}>
         <div
