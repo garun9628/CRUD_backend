@@ -4,17 +4,9 @@ import FollowListCard from "./FollowListCard";
 
 function Explore() {
   const context = useContext(tweetContext);
-  const { getAllUsers, users, loggedUserInfo, getMyDetails } = context;
-  // const [user, setUser] = useState();
+  const { getAllUsers, users, setUsers, loggedUserInfo, getMyDetails } =
+    context;
 
-  // const updateUser = (updateUser) => {
-  //   setUser({
-  //     id: updateUser._id,
-  //     name: updateUser.name,
-  //     email: updateUser.email,
-  //     following: updateUser.following,
-  //   });
-  // };
   useEffect(() => {
     if (localStorage.getItem("token")) {
       getMyDetails();
@@ -50,7 +42,9 @@ function Explore() {
             if (
               loggedUserInfo &&
               loggedUserInfo.following &&
-              loggedUserInfo.following.includes(user)
+              loggedUserInfo.following.findIndex(
+                (flwUser) => flwUser === user._id
+              ) !== -1
             ) {
               return false;
             }

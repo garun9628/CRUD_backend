@@ -145,7 +145,7 @@ router.patch("/updateuser/:id", fetchuser, async (req, res) => {
 
     user = await User.findByIdAndUpdate(
       req.params.id,
-      { $set: { following: following } },
+      { $set: { following } },
       { new: true }
     );
     res.json({ user });

@@ -6,7 +6,7 @@ const TweetState = (props) => {
   const initialTweets = [];
   const usersArr = [];
 
-  const [tweets, setTweets] = useState(initialTweets);
+  const [tweets, setTweets] = useState(initialTweets); // ye mere my tweets ke liye hai
   const [users, setUsers] = useState(usersArr);
   const [loggedUserInfo, setLoggedUserInfo] = useState(null);
 
@@ -128,6 +128,7 @@ const TweetState = (props) => {
       value={{
         tweets,
         users,
+        setUsers,
         loggedUserInfo,
         setLoggedUserInfo,
         setTweets,

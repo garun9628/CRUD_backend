@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import tweetContext from "../context/tweets/TweetContext";
-import TweetItem from "./TweetItem";
+import MyTweetItem from "./MyTweetItem";
 
-const Tweets = (props) => {
+const MyTweets = (props) => {
   const history = useNavigate();
   const { showAlert } = props;
   const context = useContext(tweetContext);
@@ -145,7 +145,7 @@ const Tweets = (props) => {
         <div className="row my-5">
           {tweets.map((tweet) => {
             return (
-              <TweetItem
+              <MyTweetItem
                 key={tweet._id}
                 updateTweet={updateTweet}
                 tweet={tweet}
@@ -159,4 +159,4 @@ const Tweets = (props) => {
   );
 };
 
-export default Tweets;
+export default MyTweets;

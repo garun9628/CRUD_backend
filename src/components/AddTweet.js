@@ -1,11 +1,13 @@
 import React, { useContext, useState, useRef } from "react";
 import tweetContext from "../context/tweets/TweetContext";
+import { useNavigate } from "react-router-dom";
 
 const AddTweet = (props) => {
   const context = useContext(tweetContext);
   const { addTweet } = context;
   const refModal = useRef(null);
   const refClose = useRef(null);
+  const navigate = useNavigate();
   const [tweet, setTweet] = useState({
     title: "",
     tag: "",
@@ -18,6 +20,10 @@ const AddTweet = (props) => {
       etitle: currTweet.title,
       etag: currTweet.tag,
     });
+  };
+
+  const handleMyTweetsClick = (e) => {
+    navigate("/mytweets");
   };
 
   const onChange = (e) => {
@@ -36,7 +42,11 @@ const AddTweet = (props) => {
         <button onClick={handlePosts} type="button" className="btn btn-primary">
           Post
         </button>
-        <button type="button" className="btn btn-secondary">
+        <button
+          type="button"
+          onClick={handleMyTweetsClick}
+          className="btn btn-secondary"
+        >
           My Tweets
         </button>
       </div>

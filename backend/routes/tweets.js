@@ -16,6 +16,17 @@ router.get("/fetchalltweets", fetchuser, async (req, res) => {
   }
 });
 
+router.get("/fetchFollowerstweets/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const tweets = await Tweet.find({ user: id });
+    res.send(tweets);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 // Route 2: Add a tweet to a signed user using POST "/api/tweets/addtweet" belong to user which is already signed in.
 // Login required.
 router.post(

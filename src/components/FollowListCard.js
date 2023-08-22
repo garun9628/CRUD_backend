@@ -1,16 +1,60 @@
 import React, { useEffect, useContext } from "react";
 import tweetContext from "../context/tweets/TweetContext";
-const FollowListCard = (props) => {
-  const { user, updateUser } = props;
-  const context = useContext(tweetContext);
-  const { loggedUserInfo, getMyDetails, setLoggedUserInfo, updateFollow } =
-    context;
 
+const FollowListCard = (props) => {
+  const { user } = props;
+  const context = useContext(tweetContext);
+  const { loggedUserInfo, users, setUsers, setLoggedUserInfo, updateFollow } =
+    context;
   const handleFollowClick = () => {
-    loggedUserInfo.following.push(user);
-    // updateUser(loggedUserInfo);
-    console.log(loggedUserInfo);
-    updateFollow(loggedUserInfo._id, loggedUserInfo.following);
+    const newLoggedUserInfo = { ...loggedUserInfo };
+    const updatedLoggedUserInfo = {
+      ...loggedUserInfo,
+      following: [...loggedUserInfo.user.following, user._id],
+    };
+
+    loggedUserInfo.user.following.find((userStr) => {
+      if (userStr === user._id) {
+        return;
+      }
+    });
+
+    setLoggedUserInfo({
+      ...loggedUserInfo,
+      following: [...loggedUserInfo.following, user._id],
+    });
+
+    const newUsers = users
+      .filter((user) => {
+        return user._id !== loggedUserInfo._id;
+      })
+      .filter((user) => {
+        if (
+          updatedLoggedUserInfo &&
+          updatedLoggedUserInfo.following &&
+          updatedLoggedUserInfo.following.findIndex(
+            (flwUser) => flwUser === user._id
+          ) !== -1
+        ) {
+          return false;
+        }
+        return true;
+      });
+    setUsers(
+      newUsers.map((contextUsr) => {
+        if (contextUsr._id === loggedUserInfo._id) {
+          return {
+            ...loggedUserInfo,
+            following: [...loggedUserInfo.following, user._id],
+          };
+        } else {
+          return contextUsr;
+        }
+      })
+    );
+    // backend me update karne ke liye
+    newLoggedUserInfo.following.push(user._id);
+    updateFollow(newLoggedUserInfo._id, newLoggedUserInfo.following);
   };
 
   return (

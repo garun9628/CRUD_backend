@@ -9,6 +9,7 @@ import Signup from "./components/Signup";
 import UserInfo from "./components/UserInfo";
 import { useState } from "react";
 import Explore from "./components/Explore";
+import MyTweets from "./components/MyTweets";
 
 const App = () => {
   const [alert, setAlert] = useState(null);
@@ -57,6 +58,11 @@ const App = () => {
                 element={<Signup showAlert={showAlert} />}
               ></Route>
               <Route exact path="/user-info" element={<UserInfo />}></Route>
+              <Route
+                exact
+                path="/mytweets"
+                element={<MyTweets showAlert={showAlert} />}
+              ></Route>
             </Routes>
           </div>
         </Router>
