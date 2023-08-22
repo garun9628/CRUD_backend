@@ -3,8 +3,8 @@ import tweetContext from "../context/tweets/TweetContext";
 import MyTweetItem from "./MyTweetItem";
 
 const FollowersTweets = () => {
-  const url = "http://localhost:5000";
-  const host = process.env.REACT_APP_API_URL || "default-api-url";
+  const host = "http://localhost:5000";
+  // const url = process.env.REACT_APP_API_URL || "default-api-url";
   const context = useContext(tweetContext);
   const { users, getAllUsers } = context;
 
